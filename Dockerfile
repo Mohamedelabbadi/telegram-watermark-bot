@@ -1,17 +1,16 @@
-# Use Python 3.11 slim
+# Use Python 3.11 slim to avoid imghdr issues
 FROM python:3.11-slim
 
-# Set working directory
 WORKDIR /app
 
-# Install system dependencies (ffmpeg for MoviePy)
-RUN apt-get update && apt-get install -y ffmpeg
+# Install system dependencies
+RUN apt-get update && apt-get install -y ffmpeg libglib2.0-0 libsm6 libxext6 libxrender-dev
 
 # Copy requirements & install Python packages
 COPY requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Copy all code
+# Copy bot code & JSON files
 COPY . .
 
 # Environment variable TOKEN
